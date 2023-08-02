@@ -1,0 +1,50 @@
+STEP 1: Create VPC
+
+AWS Management Console.
+Navigate to the VPC service.
+Create a new VPC with an CIDR block.
+Set up IPv4.
+
+STEP 2: Create Subnets
+
+Create public and private subnets in different availability zones.
+Public subnets will host resources like load balancers and instances with public IP addresses.
+Private subnets will host instances that don't need direct internet access.
+
+STEP 3: Setting up the Internet Gateway
+Create an internet gateway and attach it to your VPC.
+Configure route tables to direct traffic from public subnets to the internet gateway.
+
+STEP 4: Create the NAT Gateway
+Create a NAT gateway in a public subnet.
+Configure route tables for private subnets to route outbound traffic through the NAT gateway.
+
+STEP 5: Add Route Tables
+Create separate route tables for public and private subnets.
+Associate appropriate subnets with each route table.
+Define routes in route tables to control traffic flow.
+
+STEP 6: Configure the Launch Templates
+Create launch templates with configuration settings for your instances.
+Include instance type, AMI, security groups, and other settings.
+Use user data scripts to automate instance setup during launch.
+
+Provision the template for simple html page:
+
+#!/bin/bash
+yum update -y
+yum install -y httpd
+systemctl start httpd
+systemctl enable https
+echo "<html><body><h1>Gritto Website for 3Tier Application</h1>
+</body></html>">/var/www/html/index.html
+
+
+STEP 7: Auto Scaling Groups
+Create auto scaling groups to automatically manage the number of instances.
+Define scaling policies based on metrics like CPU utilization or request count.
+
+STEP 8: Database Tier
+Set up a separate database layer using Amazon RDS or Amazon Aurora for PostgreSQL Databases.
+Configure security groups.
+Update application configurations to connect to the database tier.
